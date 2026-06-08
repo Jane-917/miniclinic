@@ -15,4 +15,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     @Query("SELECT d.department, COUNT(a) FROM Appointment a JOIN a.doctor d GROUP BY d.department")
     List<Object[]> countAppointmentsByDepartment();
+
+    long countByStatus(String status);
 }
