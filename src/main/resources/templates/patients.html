@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>病患清單 - MiniClinic</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="/">MiniClinic</a>
+        <div class="navbar-nav">
+            <a class="nav-link" href="/doctors">醫師資訊</a>
+            <a class="nav-link active" href="/patients">病歷資料</a>
+            <a class="nav-link" href="/appointment/new">預約掛號</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>病患清單</h2>
+        <span class="badge bg-secondary" th:text="${'總筆數: ' + patients.size()}"></span>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead class="table-light">
+                <tr>
+                    <th>病歷號</th>
+                    <th>姓名</th>
+                    <th>性別</th>
+                    <th>聯絡電話</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="patient : ${patients}">
+                    <td class="fw-bold" th:text="${patient.chartNo}"></td>
+                    <td th:text="${patient.name}"></td>
+                    <td>
+                        <span th:text="${patient.gender}" 
+                              th:classappend="${patient.gender == '男' ? 'text-primary' : 'text-danger'}"></span>
+                    </td>
+                    <td th:text="${patient.phone}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
