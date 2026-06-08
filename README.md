@@ -14,16 +14,17 @@ https://miniclinic-你的帳號.onrender.com
 - Spring Data JPA
 - Thymeleaf
 - SQLite（開發）/ PostgreSQL（部署）
-- BCrypt（密碼雜湊）
+- BCrypt / Spring Security Crypto（密碼雜湊）
 
 ## 功能清單
 
 - 醫師登入 / 登出
-- 醫師個人 Dashboard
+- 醫師個人 Dashboard：檢視今日掛號，即時更新掛號狀態（看診完成、取消）
+- 醫師帳號管理：支援線上修改密碼（包含舊密碼驗證與強度檢查）
 - 病患資料管理（CRUD）
 - 線上掛號功能
 - 掛號狀態變更（booked / completed / cancelled）
-- RESTful API（支援第三方整合）
+- 系統統計摘要 API：公開的資料彙整端點
 
 ## 本機執行
 
@@ -41,6 +42,25 @@ cd miniclinic
 - D002 / pass1234
 - （其他醫師密碼均為 pass1234）
 
+## 重要 API 端點
+
+### 1. 系統統計摘要 (公開)
+- **路徑**: `GET /api/stats`
+- **說明**: 回傳醫師、病患總數及各狀態掛號統計。
+- **格式**: JSON
+
+### 2. 掛號狀態更新 (需登入)
+- **路徑**: `PUT /api/appointments/{id}/status`
+- **說明**: 變更掛號狀態為 `COMPLETED` 或 `CANCELLED`。
+- **參數**: `{"status": "..."}`
+
+### 3. 修改密碼 (需登入)
+- **路徑**: `POST /password`
+- **驗證**: 
+  - 必須輸入正確的舊密碼。
+  - 新密碼長度需至少 8 碼。
+  - 兩次新密碼輸入必須一致。
+
 ## 資料初始化
 
 第一次啟動時，`data.sql` 會自動插入：
@@ -57,7 +77,7 @@ src/
 │   │   ├── controller/     # HTTP 請求處理
 │   │   ├── model/          # Entity 與 Repository
 │   │   ├── interceptor/    # 登入驗證
-│   │   └── config/         # Spring 配置
+│   │   └── config/         # Spring MVC 與攔截器配置
 │   └── resources/
 │       ├── templates/      # Thymeleaf 模板
 │       ├── static/         # CSS、JS
