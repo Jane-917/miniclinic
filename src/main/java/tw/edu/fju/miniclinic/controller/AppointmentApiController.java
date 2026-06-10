@@ -90,26 +90,6 @@ public class AppointmentApiController {
         return ResponseEntity.ok(appointments);
     }
 
-    // GET /api/stats：顯示基本統計資訊 (API 端點)
-    @GetMapping("/api/stats")
-    public ResponseEntity<Map<String, Object>> getStats() {
-        Map<String, Object> stats = new HashMap<>();
-
-        stats.put("totalDoctors", doctorRepo.count());
-        stats.put("totalPatients", patientRepo.count());
-        stats.put("totalAppointments", appointmentRepo.count());
-
-        // 依科別分組，列出每科的掛號數
-        List<Object[]> deptCounts = appointmentRepo.countAppointmentsByDepartment();
-        Map<String, Long> departmentAppointmentCounts = deptCounts.stream()
-                .collect(Collectors.toMap(
-                        arr -> (String) arr[0], // Department name
-                        arr -> (Long) arr[1]    // Count
-                ));
-        stats.put("appointmentsByDepartment", departmentAppointmentCounts);
-
-        return ResponseEntity.ok(stats);
-    }
     @PutMapping("/api/appointments/{apptId}/status")
     public ResponseEntity<Appointment> updateStatus(
 		@PathVariable Long apptId,
