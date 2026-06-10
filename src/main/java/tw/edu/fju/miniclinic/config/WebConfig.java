@@ -19,6 +19,8 @@ public class WebConfig implements WebMvcConfigurer {
             .addPathPatterns(
                 "/dashboard",
                 "/dashboard/**",
+                "/password",
+                "/password/**",
                 "/api/auth/me",
                 "/api/appointments/*/status"
             )
