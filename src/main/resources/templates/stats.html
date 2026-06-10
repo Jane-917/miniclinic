@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>系統統計摘要 - MiniClinic</title>
+    <style>
+        body { font-family: "Microsoft JhengHei", sans-serif; max-width: 600px; margin: 40px auto; padding: 0 20px; color: #0F2443; background-color: #F8FAFC; }
+        h1 { border-bottom: 3px solid #14B8A6; padding-bottom: 10px; text-align: center; }
+        .stat-card { background: white; border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        .stat-item { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #F1F5F9; }
+        .stat-item:last-child { border-bottom: none; }
+        .label { font-weight: bold; color: #64748B; }
+        .value { color: #14B8A6; font-size: 1.4em; font-weight: bold; }
+        h2 { margin-top: 40px; color: #0F2443; font-size: 1.6em; text-align: center; }
+        .back-link { display: block; text-align: center; margin-top: 40px; color: #14B8A6; text-decoration: none; font-weight: bold; }
+        .back-link:hover { color: #0D9488; }
+    </style>
+</head>
+<body>
+    <h1>系統統計摘要</h1>
+
+    <div class="stat-card">
+        <div class="stat-item">
+            <span class="label">醫師總數</span>
+            <span class="value" th:text="${totalDoctors}">0</span>
+        </div>
+        <div class="stat-item">
+            <span class="label">病患總數</span>
+            <span class="value" th:text="${totalPatients}">0</span>
+        </div>
+        <div class="stat-item">
+            <span class="label">掛號總數</span>
+            <span class="value" th:text="${totalAppointments}">0</span>
+        </div>
+    </div>
+
+    <h2>掛號狀態分佈</h2>
+    <div class="stat-card">
+        <div class="stat-item">
+            <span class="label">已預約 (BOOKED)</span>
+            <span class="value" th:text="${bookedCount}">0</span>
+        </div>
+        <div class="stat-item">
+            <span class="label">看診完成 (COMPLETED)</span>
+            <span class="value" th:text="${completedCount}">0</span>
+        </div>
+        <div class="stat-item">
+            <span class="label">已取消 (CANCELLED)</span>
+            <span class="value" th:text="${cancelledCount}">0</span>
+        </div>
+    </div>
+
+    <a th:href="@{/}" class="back-link">← 回首頁</a>
+</body>
+</html>
